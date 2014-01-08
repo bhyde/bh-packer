@@ -1,0 +1,25 @@
+This directory, and in particular it's makefile, can create a
+virtual machine that runs on VMware Fusion (for the mac) with
+Centos[1] in that VM.  It uses packer[2] to that.
+
+Prior to running the makefile you'll need to have:
+- installed packer
+- installed VMware Fusion
+- and downloaded the CentOS-6.5-x86_64-bin-DVD1.iso for Centos[3]
+
+Put CentOS-6.5-x86_64-bin-DVD1.iso into iso/CentOS-6.5-x86_64-bin-DVD1.iso.
+
+You may wish to tinker with
+- pack.json+ -- which tells packer what to do.
+- http_directory/anaconda-ks.cfg which tells CentOS's kickstarter[4] how to
+  setup the machine.
+- change the centos mirror used in both those
+
+At that point just do
+$ make
+and cross your fingers.
+
+[1] http://http://www.centos.org/
+[2] http://packer.io/ 
+[3] http://isoredirect.centos.org/centos/6/isos/x86_64/
+[4] http://www.centos.org/docs/5/html/Installation_Guide-en-US/s1-kickstart2-howuse.html

@@ -1,0 +1,39 @@
+{
+    "variables": {
+        "digitalocean_api_key": "3cc95901c00ad620aafc50065ab1d55e",
+        "digitalocean_client_id": "3cc95901c00ad620aafc50065ab1d55e",
+        "ssh_username": "bhyde"
+    },
+    "builders":[
+        {
+            "type": "digitalocean",
+            "api_key":"{{user `digitalocean_api_key`}}",
+            "client_id":"{{user `digitalocean_client_id`}}",
+            "image_id": 562354,
+            "snapshot_name" : "packer-test",
+            "ssh_username" : "{{user `ssh_username`}}",
+            "state_timeout":"6m"
+        },
+        {
+            "type": "vmware",
+            "boot_command": [
+                "<esc>",
+                "<wait>linux ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/anaconda-ks.cfg<enter>"
+            ],
+            "boot_wait": "5s",
+            "disk_size": 40000,
+            "guest_os_type": "linux",
+            "http_directory": "./http_directory",
+            "iso_url": "./iso/CentOS-6.5-x86_64-bin-DVD1.iso",
+            "iso_checksum": "83221db52687c7b857e65bfe60787838",
+            "iso_checksum_type": "md5",
+            "skip_compaction": true,
+            "ssh_password": "temp",
+            "ssh_username": "{{user `ssh_username`}}",
+            "ssh_wait_timeout": "40m",
+            "vm_name": "centos65_{{timestamp}}"
+        }
+    ],
+    "provisioners": [
+    ]
+}
