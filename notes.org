@@ -1,0 +1,15 @@
+* Issues
+** digitalocean's provisioners are running as root, but vmware as bhyde
+** less should be done in anaconda and more in provisioners
+** time synch is needed
+* VMWARE issues
+** sometimes the mac machine locks up and I have to powercycle!
+** install-emacs24 doesn't work as a provisioner
+   the resulting executable is corrupted.  works find run later?
+** sometimes I can't shutdown a guest, i have to power it down.
+** deleting VM is wonky, the pattern doesn't seem dependable.
+* CCL
+** ccl.tgz is full of stuff we don't use, so could be pruned
+
+* Emacs
+** encrypted files are useless due to sensitive changes to gpg

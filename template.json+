@@ -1,0 +1,83 @@
+// -*- mode:javascript -*-
+// JSON does not have comments, so the follow comments are removed by the makefile.
+{
+    "variables": {
+        "ssh_username": "bhyde",
+        "digitalocean_client_id": "",
+        "digitalocean_api_key": "",
+        "image_basename": "",
+        "ISO": "",
+        "ISO_CHECKSUM": "",
+        "ISO_CHECKSUM_TYPE": ""
+    },
+    "builders":[
+        {   "type": "digitalocean",
+
+            // api_key and client_id - Auth from/for DigitalOcean.
+            "api_key":"{{user `digitalocean_api_key`}}",
+            "client_id":"{{user `digitalocean_client_id`}}",
+
+            // image_id is one of the images they provide to start from
+            // see https://developers.digitalocean.com/ for the list 562354 is Centos 6.4
+            "image_id": 562354,
+
+            // region_id (int) - The ID of the region to launch the droplet in.
+
+            // size_id (int) - The ID of the droplet size to use. This
+            // defaults to "66," which is the 512MB droplet.
+
+            // snapshot_name (string) - The name of the resulting snapshot
+            // that will appear in your account. This must be unique. To help
+            // make this unique, use a function like timestamp (see
+            // configuration templates for more info)
+            "snapshot_name" : "centos64_{{timestamp}}",
+
+            // ssh_port (int/22) 
+            // ssh_timeout (string/1m)
+            // ssh_username (string)
+//            "ssh_username" : "{{user `ssh_username`}}",
+            "ssh_timeout": "5m",
+
+            // state_timeout (string) - The time to wait, as a duration
+            // string, for a droplet to enter a desired state (such as
+            // "active") before timing out. The default state timeout is "6m".
+            "state_timeout":"6m"},
+        {   "type": "vmware",
+            "boot_command": [
+                "<esc>",
+                "<wait>linux ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/anaconda-ks.cfg<enter>"
+            ],
+            "boot_wait": "5s",
+            "disk_size": 40000,
+            "guest_os_type": "linux",
+//            "headless": true,
+            "http_directory": "./http_directory",
+            "iso_url": "./iso/{{user `ISO`}}",
+            "iso_checksum": "{{user `ISO_CHECKSUM`}}",
+            "iso_checksum_type": "{{user `ISO_CHECKSUM_TYPE`}}",
+            "skip_compaction": true,
+            "ssh_password": "temp",
+            "ssh_username": "{{user `ssh_username`}}",
+            "ssh_wait_timeout": "40m",
+//            "tools_upload_flavor": "linux",
+            "vm_name": "{{user `image_basename`}}_{{timestamp}}"}],
+    "provisioners": [
+        {  "type": "shell",
+           "scripts": ["provisions/get-started.sh"]},
+        {   "type": "file",
+            "source": "provisions/ccl.tgz",
+            "destination": "/tmp/ccl.tgz"},
+        {   "type": "shell",
+            "scripts": ["provisions/install-ccl.sh",
+                        "provisions/install-quicklisp.sh",
+                        "provisions/install-epel-repo.sh",
+                        "provisions/install-hyperdex.sh",
+//                        "provisions/install-emacs24.sh", // doesn't work until after we are done, wierd
+                        "provisions/install-emacs-init.sh"]},
+        {   "type": "file",
+            "source": "provisions/install-emacs24.sh",
+            "destination": "/home/bhyde/install-emacs24.sh"},
+        {   "type": "shell", "scripts": ["provisions/all-done.sh"]}
+
+    ]
+}
