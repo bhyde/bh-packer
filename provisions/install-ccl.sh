@@ -1,9 +1,11 @@
 #!/bin/bash
 echo '#### Build CCL/OpenMCL ####'
+trap 'echo "leaving install ccl"' EXIT
+set -o nounset -o errexit -o verbose
 cd /usr/local/src
-sudo tar xzf /tmp/ccl.tgz
-sudo chown -R root:root /usr/local/src/ccl
-sudo ln -s /usr/local/src/ccl/scripts/ccl64 /usr/local/bin/ccl
+tar xzf /tmp/ccl.tgz
+chown -R root:root /usr/local/src/ccl
+ln -s /usr/local/src/ccl/scripts/ccl64 /usr/local/bin/ccl
 exit 0
 
 ## Note you need to build ccl on the target OS, following

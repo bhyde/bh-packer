@@ -2,7 +2,7 @@
 // JSON does not have comments, so the follow comments are removed by the makefile.
 {
     "variables": {
-        "ssh_username": "bhyde",
+        "ssh_username": "root",
         "digitalocean_client_id": "",
         "digitalocean_api_key": "",
         "image_basename": "",
@@ -35,7 +35,7 @@
             // ssh_port (int/22) 
             // ssh_timeout (string/1m)
             // ssh_username (string)
-//            "ssh_username" : "{{user `ssh_username`}}",
+            "ssh_username" : "{{user `ssh_username`}}",
             "ssh_timeout": "5m",
 
             // state_timeout (string) - The time to wait, as a duration
@@ -69,6 +69,7 @@
             "destination": "/tmp/ccl.tgz"},
         {   "type": "shell",
             "scripts": ["provisions/install-ccl.sh",
+                        "provisions/initialize-users.sh",
                         "provisions/install-quicklisp.sh",
                         "provisions/install-epel-repo.sh",
                         "provisions/install-hyperdex.sh",

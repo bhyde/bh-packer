@@ -1,5 +1,8 @@
 #!/bin/bash
-echo '####### emacs init #######'
+echo '#### emac-init install ####'
+trap 'echo leaving emac-init install repo' EXIT
+set -o nounset -o errexit -o verbose
+
 USER=bhyde
 DIR=/home/$USER/.emacs.d
 mkdir -p $DIR
@@ -36,4 +39,5 @@ cat > $DIR/init.el <<'EOF'
 (add-to-list 'slime-connected-hook 'setup-to-save-swank-fasls-in-asdf-cache)
 EOF
 rm -f ~/.emacs
+chown -R bhyde:admin $DIR
 exit 0
