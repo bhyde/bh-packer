@@ -1,5 +1,5 @@
 
-#### Pick one of the these ISO to use
+#### Pick one of the these ISO to use, SL isn't tested.
 
 ### Centos from http://mirrors.seas.harvard.edu/centos/6/isos/x86_64/CentOS-6.5-x86_64-bin-DVD1.iso"
 image_basename=centos
@@ -14,23 +14,15 @@ ISO_CHECKSUM_TYPE = md5
 # ISO_CHECKSUM_TYPE = sha256
 
 
-#### Pick one of these packer "types" to build for
 
-# platform=digitalocean
-# credentials=digital-ocean-credentials.json
-
-platform=vmware
-credentials=empty-credentials.json
-
-#### This does the deed.
 do-it : 
 	echo "Doing nothing, consider making: vmware or digitalocean."
 
-vmware:
+vmware-iso:
 	egrep -v '// |^ *$$' template.json+ > template.tmp
-	rm -rf output-vmware
+	rm -rf output-vmware-iso
 	packer build \
-            -only=$(vmware) \
+            -only=vmware-iso \
 	    -var ISO=$(ISO) \
             -var ISO_CHECKSUM=$(ISO_CHECKSUM) \
             -var ISO_CHECKSUM_TYPE=$(ISO_CHECKSUM_TYPE) \

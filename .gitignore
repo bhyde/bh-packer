@@ -1,6 +1,6 @@
 iso/*
 packer-cache
-output-vmware
+output-vmware-iso
 digitalocean-credentials.json
 template.tmp
 provisions/ccl.tgz
