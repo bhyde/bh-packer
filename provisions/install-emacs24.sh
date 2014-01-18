@@ -1,8 +1,13 @@
 #!/bin/bash
 
-#### First we need to add a pjku's repo...
+echo '#### emacs24 install ####'
+trap 'echo "leaving emacs24 install"' EXIT
+set -o nounset -o errexit -o verbose
 
-cat <<'EOF' > /tmp/pjku.repo
+
+#### Add pjku to yums's set of repos
+
+cat <<'EOF' > /etc/yum.repos.d/pjku.repo
 [pjku]
 name=Extra Packages for Enterprise Linux 6 – $basearch
 baseurl=http://pj.freefaculty.org/EL/6/$basearch
@@ -18,7 +23,7 @@ enabled=0
 gpgkey=file:///etc/pki/rpm-gpg/PaulJohnson-BinaryPackageSigningKey
 EOF
 
-cat <<EOF > /tmp/PaulJohnson-BinaryPackageSigningKey
+cat <<EOF > /etc/pki/rpm-gpg/PaulJohnson-BinaryPackageSigningKey
 -----BEGIN PGP PUBLIC KEY BLOCK-----
 Version: GnuPG v1.4.6 (GNU/Linux)
 
@@ -51,14 +56,13 @@ M0O7zJV8BZdj8UxsPypR4bhh0tMAoKGKMh0tOtE4CopwwSTCUxspdGAh
 -----END PGP PUBLIC KEY BLOCK-----
 EOF
 
-sudo chown root:root /tmp/PaulJohnson-BinaryPackageSigningKey
-sudo chown root:root /tmp/pjku.repo
-sudo mv /tmp/pjku.repo /etc/yum.repos.d
-sudo mv /tmp/PaulJohnson-BinaryPackageSigningKey /etc/pki/rpm-gpg/PaulJohnson-BinaryPackageSigningKey
-sudo yum clean all
+# Force yum to reconsider it's repos.
+yum clean all
 
 ####  Now we can install that damn thing.
-sudo yum -y install emacs
-#### Emacs requires a messagebus
-sudo service messagebus start
+yum -y install emacs
 
+#### Emacs requires a messagebus
+service messagebus start
+
+echo '#### Done emacs24 install ####'
