@@ -42,7 +42,7 @@
             // string, for a droplet to enter a desired state (such as
             // "active") before timing out. The default state timeout is "6m".
             "state_timeout":"6m"},
-        {   "type": "vmware",
+        {   "type": "vmware-iso",
             "boot_command": [
                 "<esc>",
                 "<wait>linux ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/anaconda-ks.cfg<enter>"
@@ -59,6 +59,8 @@
             "ssh_password": "temp",
             "ssh_username": "{{user `ssh_username`}}",
             "ssh_wait_timeout": "40m",
+            // flush disks, halt, and poweroff
+            "shutdown_command": "shutdown -P now",
 //            "tools_upload_flavor": "linux",
             "vm_name": "{{user `image_basename`}}_{{timestamp}}"}],
     "provisioners": [
@@ -73,7 +75,7 @@
                         "provisions/install-quicklisp.sh",
                         "provisions/install-epel-repo.sh",
                         "provisions/install-hyperdex.sh",
-//                        "provisions/install-emacs24.sh", // doesn't work until after we are done, wierd
+                        "provisions/install-emacs24.sh",
                         "provisions/install-emacs-init.sh"]},
         {   "type": "file",
             "source": "provisions/install-emacs24.sh",
