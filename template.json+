@@ -77,9 +77,6 @@
                         "provisions/install-hyperdex.sh",
                         "provisions/install-emacs24.sh",
                         "provisions/install-emacs-init.sh"]},
-        {   "type": "file",
-            "source": "provisions/install-emacs24.sh",
-            "destination": "/home/bhyde/install-emacs24.sh"},
         {   "type": "shell", "scripts": ["provisions/all-done.sh"]}
 
     ]
