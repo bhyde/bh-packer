@@ -59,7 +59,10 @@ EOF
 # Force yum to reconsider it's repos.
 yum clean all
 
-####  Now we can install that damn thing.
+# We will want xauth if people are going to use ssh's forwardX11 
+yum -y install xauth
+
+####  finally install emacs
 yum -y install emacs
 
 #### Emacs requires a messagebus
