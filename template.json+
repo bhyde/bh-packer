@@ -74,6 +74,7 @@
                         "provisions/initialize-users.sh",
                         "provisions/install-quicklisp.sh",
                         "provisions/install-epel-repo.sh",
+                        "provisions/install-miniconda.sh",
                         "provisions/install-hyperdex.sh",
                         "provisions/install-emacs24.sh",
                         "provisions/install-emacs-init.sh"]},
