@@ -1,23 +1,25 @@
 This directory is used to create a virtual machine that runs on either
 VMware or Digital Ocean.
- Fusion (for the mac) with
-Centos[1] in that VM.  It uses packer[2] to that.
+
+It uses packer[2] for these builds and the base OS is Centos6[1].
 
 Prior to running the makefile you'll need to have:
 - installed packer
-- downloaded the CentOS-6.5-x86_64-bin-DVD1.iso for Centos[3]
+- a downloaded of CentOS-6.5-x86_64-bin-DVD1.iso[3], if your building vmware images.
+- VMWare Fusion, if your building vmware images.
+- A Digital Ocean account, if your building digtalocean VMs.
 
-Obviously, if your using VMware Fusion you'll need to have that installed.
+If you build digital ocean VMs you will need to put your account credentials 
+in ./digitalocean-credentials.json.  Something like this.
 
-If you using Digital Ocean you will need to put your account credentials in
-digitalocean-credentials.json.  Something like this.
 {
     "digitalocean_client_id": "BlahBlahBlahBar",
     "digitalocean_api_key": "BlahBlahBlahBlahFoo"
 }
+
 Digital Ocean is quite cheap so building one of these will cost you only
-a few cents each time.  But if you don't delete the snapshot they will
-charge you a monthly fee to keep it around.
+a few cents each time.  But if you don't delete the snapshot (aka image)
+they will charge you a monthly fee to keep it around.
 
 Put CentOS-6.5-x86_64-bin-DVD1.iso into iso/CentOS-6.5-x86_64-bin-DVD1.iso.
 
